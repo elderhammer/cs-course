@@ -131,13 +131,31 @@ def zero(f):
 def successor(n):
     return lambda f: lambda x: f(n(f)(x))
 
+def fzero(f):
+    def foo(x):
+        return x
+    return foo
+
+def fsuccessor(n):
+    def foo(f):
+        def bar(x):
+            return f(n(f)(x))
+        return bar
+    return foo
+
 def one(f):
     """Church numeral 1: same as successor(zero)"""
     "*** YOUR CODE HERE ***"
+    def fx(x):
+        return f(x)
+    return fx
 
 def two(f):
     """Church numeral 2: same as successor(successor(zero))"""
     "*** YOUR CODE HERE ***"
+    def ffx(x):
+        return f(f(x))
+    return ffx
 
 three = successor(two)
 
@@ -154,6 +172,7 @@ def church_to_int(n):
     3
     """
     "*** YOUR CODE HERE ***"
+    
 
 def add_church(m, n):
     """Return the Church numeral for m + n, for Church numerals m and n.
