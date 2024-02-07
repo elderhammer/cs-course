@@ -124,17 +124,41 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     feral_hogs: A boolean indicating whether the feral hogs rule should be active.
     """
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
+    last_score0 = 0
+    last_score1 = 0
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
     while score0 < goal and score1 < goal:
         if who == 0:
+            # Select a strategy
             num_rolls = strategy0(score0, score1)
-            score0 += take_turn(num_rolls, score1, dice)
+            # Take a turn
+            turn_score0 = take_turn(num_rolls, score1, dice)
+            # Feral hog rule
+            if feral_hogs:
+                if abs(num_rolls - last_score0) == 2:
+                    score0 += 3
+            # Record last score
+            last_score0 = turn_score0
+            # Add score of current turn
+            score0 += turn_score0
+            # Swine swap rule
             if is_swap(score0, score1):
                 score0, score1 = score1, score0
         else:
+            # Select a strategy
             num_rolls = strategy1(score1, score0)
-            score1 += take_turn(num_rolls, score0, dice)
+            # Take a turn
+            turn_score1 = take_turn(num_rolls, score0, dice)
+            # Feral hog rule
+            if feral_hogs:
+                if abs(num_rolls - last_score1) == 2:
+                    score1 += 3
+            # Record last score
+            last_score1 = turn_score1
+            # Add score of current turn
+            score1 += turn_score1
+            # Swine swap rule
             if is_swap(score1, score0):
                 score0, score1 = score1, score0
         who = other(who)
