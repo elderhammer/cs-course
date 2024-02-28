@@ -174,6 +174,16 @@ def report_progress(typed, prompt, id, send):
     """Send a report of your id and progress so far to the multiplayer server."""
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    correct_sofar = 0
+    for idx in range(len(typed)):
+        if typed[idx] != prompt[idx]:
+            break
+        correct_sofar = correct_sofar + 1
+    progress = correct_sofar / len(prompt)
+
+    send({'id': id, 'progress': progress})
+
+    return progress
     # END PROBLEM 8
 
 
@@ -200,6 +210,14 @@ def time_per_word(times_per_player, words):
     """
     # BEGIN PROBLEM 9
     "*** YOUR CODE HERE ***"
+    times = []
+    for times_player in times_per_player:
+        elapsed_per_words = []
+        last_time = times_player[0]
+        for next_time in times_player[1:]:
+            elapsed_per_words, last_time = elapsed_per_words + [next_time - last_time], next_time
+        times = times + [elapsed_per_words]
+    return game(words, times)
     # END PROBLEM 9
 
 
@@ -215,6 +233,21 @@ def fastest_words(game):
     words = range(len(all_words(game)))    # An index for each word
     # BEGIN PROBLEM 10
     "*** YOUR CODE HERE ***"
+    f_words = []
+    for player_words_idx in players:
+        pf_words = []
+        for word_idx in words:
+            f_time = -1
+            f_player_idx = -1
+            for player_idx in players:
+                p_time = time(game, player_idx, word_idx)
+                if f_time == -1 or p_time < f_time:
+                    f_player_idx, f_time = player_idx, p_time
+            if f_player_idx == player_words_idx:
+                pf_words = pf_words + [word_at(game, word_idx)]
+        f_words = f_words + [pf_words]
+    return f_words
+            
     # END PROBLEM 10
 
 
