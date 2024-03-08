@@ -90,9 +90,9 @@ def trade(first, second):
     """
     m, n = 1, 1
 
-    equal_prefix = lambda: ______________________
-    while _______________________________:
-        if __________________:
+    equal_prefix = lambda: sum(first[:m]) == sum(second[:n])
+    while equal_prefix() == False and m < len(first) and n < len(second):
+        if sum(first[:m]) < sum(second[:n]):
             m += 1
         else:
             n += 1
@@ -117,6 +117,9 @@ def reverse(lst):
     [-8, 72, 42]
     """
     "*** YOUR CODE HERE ***"
+    for idx in range(len(lst)//2):
+        lst[idx], lst[-idx] = lst[-idx], lst[idx]
+    return lst
 
 
 cs61a = {
@@ -144,6 +147,16 @@ def make_glookup(class_assignments):
     0.8913043478260869
     """
     "*** YOUR CODE HERE ***"
+    entered_assignments = {}
+    def glookup(assignment, point):
+        entered_assignments[assignment] = point
+        ideal_total_point = 0
+        student_total_point = 0
+        for assignment, point in entered_assignments.items():
+            ideal_total_point = ideal_total_point + class_assignments[assignment]
+            student_total_point = student_total_point + point
+        return student_total_point / ideal_total_point
+    return glookup
 
 
 def num_trees(n):
