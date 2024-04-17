@@ -48,6 +48,11 @@ def every_other(s):
     Link(4)
     """
     "*** YOUR CODE HERE ***"
+    assert s is Link.empty or isinstance(s, Link)
+    while s.rest is not Link.empty and s.rest.rest is not Link.empty:
+        s.rest = s.rest.rest
+        s = s.rest
+    s.rest = Link.empty
 
 
 def label_squarer(t):
