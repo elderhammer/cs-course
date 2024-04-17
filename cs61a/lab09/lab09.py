@@ -64,6 +64,7 @@ def label_squarer(t):
     Tree(1, [Tree(9, [Tree(25)]), Tree(49)])
     """
     "*** YOUR CODE HERE ***"
+    t.map(lambda c: c * c)
 
 
 def cumulative_mul(t):
