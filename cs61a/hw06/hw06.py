@@ -120,9 +120,13 @@ class Mint:
 
     def create(self, kind):
         "*** YOUR CODE HERE ***"
+        assert issubclass(kind, Coin)
+        coin = kind(self.year)
+        return coin
 
     def update(self):
         "*** YOUR CODE HERE ***"
+        self.year = Mint.current_year
 
 class Coin:
     def __init__(self, year):
@@ -130,6 +134,18 @@ class Coin:
 
     def worth(self):
         "*** YOUR CODE HERE ***"
+        age = Mint.current_year - self.year
+
+        class_cents = 0
+        if isinstance(self, Nickel):
+            class_cents = Nickel.cents
+        elif isinstance(self, Dime):
+            class_cents = Dime.cents
+
+        if age > 50:
+            return class_cents + (age - 50)
+        else:
+            return class_cents
 
 class Nickel(Coin):
     cents = 5
