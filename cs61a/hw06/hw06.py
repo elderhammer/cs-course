@@ -232,7 +232,16 @@ def store_digits(n):
     >>> cleaned = re.sub(r"#.*\\n", '', re.sub(r'"{3}[\s\S]*?"{3}', '', inspect.getsource(store_digits)))
     >>> print("Do not use str or reversed!") if any([r in cleaned for r in ["str", "reversed"]]) else None
     """
-    "*** YOUR CODE HERE ***"
+    "*** YOUR CODE HERE ***"    
+    n, digit = n // 10, n % 10
+    lst = Link(digit)
+
+    while n > 0:
+        n, digit = n // 10, n % 10
+        lst = Link(digit, lst)
+
+    return lst
+
 
 
 def path_yielder(t, value):
