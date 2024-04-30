@@ -180,6 +180,41 @@ def is_bst(t):
     False
     """
     "*** YOUR CODE HERE ***"
+    def bst_min(t):
+        if t.is_leaf():
+            return t.label
+        elif len(t.branches) == 1:
+            if t.branches[0].label < t.label:
+                return bst_min(t.branches[0])
+            else:
+                return t.label
+        else:
+            return bst_min(t.branches[0])
+    
+    def bst_max(t):
+        if t.is_leaf():
+            return t.label
+        elif len(t.branches) == 1:
+            if t.branches[0].label > t.label:
+                return bst_max(t.branches[0])
+            else:
+                return t.label
+        else:
+            return bst_min(t.branches[1])
+        
+    if t.is_leaf():
+        return True
+    elif len(t.branches) == 1:
+        if t.branches[0].label <= t.label:
+            return bst_max(t.branches[0]) <= t.label and is_bst(t.branches[0])
+        else:
+            return bst_min(t.branches[0]) > t.label and is_bst(t.branches[0])
+    elif len(t.branches) == 2:
+        left_child, right_child = t.branches
+        return bst_max(left_child) <= t.label and bst_min(right_child) > t.label and is_bst(left_child) and is_bst(right_child)
+    else:
+        return False
+
 
 
 def store_digits(n):
