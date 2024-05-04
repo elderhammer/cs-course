@@ -280,10 +280,11 @@ def path_yielder(t, value):
     """
 
     "*** YOUR CODE HERE ***"
-
-    for _______________ in _________________:
-        for _______________ in _________________:
-
+    if t.label == value:
+        yield [value]
+    for b in t.branches:
+        for path in path_yielder(b, value):
+            yield [t.label] + path
             "*** YOUR CODE HERE ***"
 
 
