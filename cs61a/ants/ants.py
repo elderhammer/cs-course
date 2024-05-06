@@ -110,6 +110,7 @@ class Ant(Insect):
 
     def __init__(self, armor=1):
         """Create an Ant with an ARMOR quantity."""
+        self.has_been_inspired = False
         Insect.__init__(self, armor)
 
     def can_contain(self, other):
@@ -455,7 +456,7 @@ class ScubaThrower(ThrowerAnt):
 # END Problem 12
 
 # BEGIN Problem 13
-class QueenAnt(Ant):  # You should change this line
+class QueenAnt(ScubaThrower):  # You should change this line
 # END Problem 13
     """The Queen of the colony. The game is over if a bee enters her place."""
 
@@ -463,12 +464,18 @@ class QueenAnt(Ant):  # You should change this line
     food_cost = 7
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 13
-    implemented = False   # Change to True to view in the GUI
+    has_true_queen = False
+    implemented = True   # Change to True to view in the GUI
     # END Problem 13
 
     def __init__(self, armor=1):
         # BEGIN Problem 13
         "*** YOUR CODE HERE ***"
+        self.is_impostor = True
+        if QueenAnt.has_true_queen == False:
+            self.is_impostor = False
+            QueenAnt.has_true_queen = True
+        super().__init__(armor)
         # END Problem 13
 
     def action(self, gamestate):
@@ -479,6 +486,23 @@ class QueenAnt(Ant):  # You should change this line
         """
         # BEGIN Problem 13
         "*** YOUR CODE HERE ***"
+        if self.is_impostor == True:
+            self.reduce_armor(self.armor)
+        else:
+            check_place = self.place.exit
+            while check_place is not None:
+                if check_place.ant is not None:
+                    ant = check_place.ant
+                    if isinstance(ant, ContainerAnt):
+                        if ant.contained_ant is not None:
+                            if ant.contained_ant.has_been_inspired == False:
+                                ant.contained_ant.damage *= 2
+                                ant.contained_ant.has_been_inspired = True
+                    if ant.has_been_inspired == False:
+                        ant.damage *= 2
+                        ant.has_been_inspired = True
+                check_place = check_place.exit
+            super().action(gamestate)
         # END Problem 13
 
     def reduce_armor(self, amount):
@@ -487,7 +511,15 @@ class QueenAnt(Ant):  # You should change this line
         """
         # BEGIN Problem 13
         "*** YOUR CODE HERE ***"
+        super().reduce_armor(amount)
+        if self.armor <= 0 and self.is_impostor == False:
+            bees_win()
         # END Problem 13
+            
+    def remove_from(self, place):
+        if self.is_impostor == True:
+            super().remove_from(place)
+
 
 
 
