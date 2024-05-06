@@ -438,6 +438,20 @@ class Water(Place):
 
 # BEGIN Problem 12
 # The ScubaThrower class
+class ScubaThrower(ThrowerAnt):
+    name = 'Scuba'
+    food_cost = 6
+    is_watersafe = True
+    implemented = True
+
+    def __init__(self, armor=1):
+        super().__init__(armor)
+
+    def reduce_armor(self, amount):
+        if isinstance(self.place, Water) == False:
+            return super().reduce_armor(amount)
+
+    
 # END Problem 12
 
 # BEGIN Problem 13
