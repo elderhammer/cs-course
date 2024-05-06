@@ -333,6 +333,13 @@ class NinjaAnt(Ant):
 
 # BEGIN Problem 8
 # The WallAnt class
+class WallAnt(Ant):
+    name = 'Wall'
+    food_cost = 4
+    implemented = True
+
+    def __init__(self):
+        super().__init__(4)
 # END Problem 8
 
 class ContainerAnt(Ant):
