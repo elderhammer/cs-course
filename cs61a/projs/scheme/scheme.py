@@ -36,7 +36,17 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     else:
         # BEGIN PROBLEM 4
         "*** YOUR CODE HERE ***"
-        
+        # 从 env 把对应的 procedure 找出来
+        operator = scheme_eval(first, env)
+
+        # 如果找不到则报错
+        validate_procedure(operator)
+
+        # operands 是一个 scheme list
+        operands = rest.map(lambda x: scheme_eval(x, env))
+
+        # scheme_apply 会创建 frame
+        return scheme_apply(operator, operands, env)
         # END PROBLEM 4
 
 def self_evaluating(expr):
