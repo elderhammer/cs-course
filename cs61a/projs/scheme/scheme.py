@@ -79,7 +79,13 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 7
-    return scheme_eval(expressions.first, env) # change this line
+    if expressions is nil:
+        return None
+    ptr = expressions
+    while ptr.rest is not nil:
+        scheme_eval(ptr.first, env)
+        ptr = ptr.rest
+    return scheme_eval(ptr.first, env, True)
     # END PROBLEM 7
 
 ################
@@ -210,6 +216,7 @@ class LambdaProcedure(Procedure):
         of values, for a lexically-scoped call evaluated in my parent environment."""
         # BEGIN PROBLEM 11
         "*** YOUR CODE HERE ***"
+        return self.env.make_child_frame(self.formals, args)
         # END PROBLEM 11
 
     def __str__(self):
