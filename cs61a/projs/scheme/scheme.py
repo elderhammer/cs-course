@@ -132,6 +132,14 @@ class Frame(object):
         """
         # BEGIN PROBLEM 10
         "*** YOUR CODE HERE ***"
+        if len(formals) != len(vals):
+            raise SchemeError('the number of argument values does not match with the number of formal parameters')
+        else:
+            child_env = Frame(self)
+            while formals is not nil:
+                child_env.define(formals.first, vals.first)
+                formals, vals = formals.rest, vals.rest
+            return child_env
         # END PROBLEM 10
 
 ##############
