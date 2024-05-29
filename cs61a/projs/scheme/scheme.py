@@ -444,6 +444,24 @@ def make_let_frame(bindings, env):
     names, values = nil, nil
     # BEGIN PROBLEM 14
     "*** YOUR CODE HERE ***"
+    while bindings is not nil:
+        validate_form(bindings.first, 2, 2)
+        name = bindings.first.first
+        expr = bindings.first.rest
+
+        names = Pair(name, names)
+
+        if scheme_symbolp(expr.first):
+            validate_form(expr, 1, 1)
+            values = Pair(env.lookup(expr.first), values)
+        elif scheme_numberp(expr.first):
+            validate_form(expr, 1, 1)
+            values = Pair(expr.first, values)
+        else:
+            values = Pair(scheme_eval(expr.first, env), values)
+
+        bindings = bindings.rest
+    validate_formals(names)
     # END PROBLEM 14
     return env.make_child_frame(names, values)
 
