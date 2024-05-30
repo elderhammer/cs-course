@@ -588,6 +588,8 @@ class MuProcedure(Procedure):
 
     # BEGIN PROBLEM 15
     "*** YOUR CODE HERE ***"
+    def make_call_frame(self, args, env):
+        return env.make_child_frame(self.formals, args)
     # END PROBLEM 15
 
     def __str__(self):
@@ -602,9 +604,10 @@ def do_mu_form(expressions, env):
     validate_form(expressions, 2)
     formals = expressions.first
     validate_formals(formals)
-    # BEGIN PROBLEM 18
+    # BEGIN PROBLEM 15
     "*** YOUR CODE HERE ***"
-    # END PROBLEM 18
+    return MuProcedure(formals, expressions.rest)
+    # END PROBLEM 15
 
 SPECIAL_FORMS['mu'] = do_mu_form
 
