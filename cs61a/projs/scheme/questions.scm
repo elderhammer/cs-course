@@ -15,8 +15,20 @@
 ;; Returns a list of two-element lists
 (define (enumerate s)
   ; BEGIN PROBLEM 16
-  'replace-this-line
+  (define (idx-enumerate s idx)
+    (if (equal? s nil)
+      nil
+      (cons
+        (cons idx (cons (car s) nil))
+        (idx-enumerate
+          (cdr s)
+          (+ idx 1)
+        )
+      )
+    )
   )
+  (idx-enumerate s 0)
+)
   ; END PROBLEM 16
 
 ;; Problem 17
